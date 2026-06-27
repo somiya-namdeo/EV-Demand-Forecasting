@@ -134,155 +134,29 @@ I --> J
 ![Home Dashboard](assets/screenshots/home.png)
 
 Overview dashboard showing final model selection and key performance metrics.
-
 ---
 
-<div align="center">
-  <h1>ChargeWise AI</h1>
-  <p><strong>AI-Powered EV Charging Demand Forecasting System</strong></p>
+## Prediction Interface
 
-  [![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-00ffcc?style=for-the-badge&logo=streamlit)](https://chargewise-ai.streamlit.app)
-  [![Python](https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python)](https://www.python.org/)
-  [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.4.1-orange?style=for-the-badge&logo=scikit-learn)](https://scikit-learn.org/)
-  [![Streamlit](https://img.shields.io/badge/Streamlit-1.32.0-FF4B4B?style=for-the-badge&logo=streamlit)](https://streamlit.io/)
-</div>
+### Complete Demand Forecasting Workflow
 
-<br />
+<p align="center">
+  <img src="assets/screenshots/prediction-1.png" width="100%">
+</p>
 
-## Overview
+<br>
 
-ChargeWise AI is a machine learning powered forecasting system engineered to predict EV charging demand. By leveraging data-driven decision support, the platform enables intelligent infrastructure planning and operational resource optimization. It accurately models temporal usage patterns, spatial dynamics, and charging conditions to deliver actionable insights for modern EV networks.
+<p align="center">
+  <img src="assets/screenshots/prediction-2.png" width="100%">
+</p>
 
-## Project Highlights
+<br>
 
-- End-to-End Machine Learning Pipeline
-- 8,354 EV Charging Records
-- 55 Final Engineered Features
-- 5 Machine Learning Models Evaluated
-- Random Forest Selected as Final Model
-- R² Score: 0.9875
-- RMSE: 3.11
-- Interactive Streamlit Dashboard
-- Live Cloud Deployment
+<p align="center">
+  <img src="assets/screenshots/prediction-3.png" width="100%">
+</p>
 
----
-
-## Live Demo
-
-**Access the deployed application here:** [ChargeWise AI on Streamlit Cloud](https://chargewise-ai.streamlit.app)
-
----
-
-## Dataset & Model Intelligence
-
-### Dataset Profile
-- **Total Records:** 8,354
-- **Original Features:** 21
-- **Custom Features Engineered:** 8
-- **Final Features Used:** 55
-- **Target Variable:** Charging Demand (kW)
-
-### Machine Learning Models Evaluated
-The following algorithms were rigorously evaluated to determine the best predictive capability:
-- Linear Regression
-- Decision Tree Regressor
-- Random Forest Regressor *(Final Selected Model)*
-- XGBoost Regressor
-- CatBoost Regressor
-
-### Final Model Performance (Random Forest Regressor)
-| Metric | Score |
-|:---|:---|
-| **R² Score** | 0.9875 |
-| **RMSE** | 3.11 |
-| **MAE** | 2.61 |
-
----
-
-## Feature Engineering
-
-A robust feature engineering pipeline was implemented to extract deep domain-specific insights:
-
-### Time Features
-- Hour, Minute, Month, Day, Day of Week, Weekend Flag
-- **Cyclical Encoding:** Hour Sin, Hour Cos
-
-### Geospatial Features
-- Geohash Encoding
-- Geo Frequency Encoding
-
-### Demand Intelligence Features
-- Geo Mean Demand
-- Road Mean Demand
-- Geo-Time Interaction Features
-
-### Station & Vehicle Features
-- Queue Length, Waiting Time
-- Charging Power, Battery Capacity, Initial State of Charge
-
----
-
-## Tech Stack
-
-### Machine Learning & Data Analysis
-- **Python** (Core Language)
-- **Scikit-Learn** (Random Forest Modeling)
-- **XGBoost & CatBoost** (Model Evaluation)
-- **Pandas & NumPy** (Data Manipulation)
-- **Matplotlib & Seaborn** (Data Visualization)
-
-### Deployment & Tools
-- **Streamlit** (Web Application Framework)
-- **Streamlit Cloud** (Cloud Deployment)
-- **Jupyter Notebook & VS Code** (Development Environments)
-- **Git & GitHub** (Version Control)
-
----
-
-## System Architecture
-
-```mermaid
-flowchart TD
-
-A[User Input Interface]
-B[Input Validation Layer]
-C[Feature Processing]
-D[Feature Engineering Pipeline]
-E[Encoded Feature Vector]
-F[Random Forest Regressor]
-G[Demand Prediction]
-H[Demand Classification]
-I[Operational Recommendation Engine]
-J[Streamlit Dashboard Output]
-
-A --> B
-B --> C
-C --> D
-D --> E
-E --> F
-F --> G
-G --> H
-H --> I
-I --> J
-```
-
----
-
-## Home Dashboard
-
-![Home Dashboard](assets/screenshots/home.png)
-
-Overview dashboard showing final model selection and key performance metrics.
-
----
-
-## Prediction Interface – Station & Vehicle Inputs
-
-![Prediction Step 1](assets/screenshots/prediction-1.png)
-![Prediction Step 2](assets/screenshots/prediction-2.png)
-![Prediction Step 3](assets/screenshots/prediction-3.png)
-
-Station information and vehicle configuration inputs used for demand forecasting, environmental and temporal factors affecting charging demand, energy pricing and renewable energy parameters used in prediction.
+Complete demand forecasting interface showcasing station configuration, vehicle characteristics, charging parameters, temporal attributes, environmental conditions, and energy pricing factors used by the Random Forest model to generate EV charging demand predictions.
 
 ---
 ## Prediction Results
