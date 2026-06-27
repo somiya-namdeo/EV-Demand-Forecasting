@@ -32,6 +32,8 @@ ChargeWise AI is a machine learning powered forecasting system engineered to pre
 
 **Access the deployed application here:** [ChargeWise AI on Streamlit Cloud](https://chargewise-ai.streamlit.app)
 
+**GitHub Repository:** https://github.com/somiya-namdeo/EV-Demand-Forecasting
+
 ---
 
 ## Dataset & Model Intelligence
@@ -90,7 +92,7 @@ A robust feature engineering pipeline was implemented to extract deep domain-spe
 - **Scikit-Learn** (Random Forest Modeling)
 - **XGBoost & CatBoost** (Model Evaluation)
 - **Pandas & NumPy** (Data Manipulation)
-- **Matplotlib & Seaborn** (Data Visualization)
+- **Matplotlib** (Data Visualization)
 
 ### Deployment & Tools
 - **Streamlit** (Web Application Framework)
@@ -128,12 +130,24 @@ I --> J
 ```
 
 ---
+## Business Impact
+
+ChargeWise AI helps EV charging station operators:
+
+- Forecast charging demand before congestion occurs
+- Improve charger utilization efficiency
+- Support infrastructure expansion planning
+- Enable demand-aware operational decisions
+- Improve customer charging experience through better resource allocation
+
+---
 
 ## Home Dashboard
 
 ![Home Dashboard](assets/screenshots/home.png)
 
 Overview dashboard showing final model selection and key performance metrics.
+
 ---
 
 ## Prediction Interface
@@ -159,6 +173,8 @@ Overview dashboard showing final model selection and key performance metrics.
 Complete demand forecasting interface showcasing station configuration, vehicle characteristics, charging parameters, temporal attributes, environmental conditions, and energy pricing factors used by the Random Forest model to generate EV charging demand predictions.
 
 ---
+
+## Prediction Results
 ## Prediction Results
 
 ![Prediction Results](assets/screenshots/results.png)
@@ -237,7 +253,7 @@ EV-Demand-Forecasting/
 - Demand Heatmaps
 - Time-Series Forecasting
 - MLOps Pipeline
-- Cloud Deployment
+- Docker Containerization
 
 ---
 
