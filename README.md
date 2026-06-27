@@ -10,21 +10,31 @@
 
 <br />
 
-## 📖 Overview
+## Overview
 
-EV charging stations often face congestion, under-utilization, inefficient charger allocation, and peak-hour demand spikes. 
+ChargeWise AI is a machine learning powered forecasting system engineered to predict EV charging demand. By leveraging data-driven decision support, the platform enables intelligent infrastructure planning and operational resource optimization. It accurately models temporal usage patterns, spatial dynamics, and charging conditions to deliver actionable insights for modern EV networks.
 
-**ChargeWise AI** is an end-to-end Machine Learning project designed to solve these challenges. It forecasts EV charging demand using charging station conditions, vehicle characteristics, environmental factors, and temporal usage patterns to support smarter infrastructure planning and operational decision-making.
+## Project Highlights
+
+- End-to-End Machine Learning Pipeline
+- 8,354 EV Charging Records
+- 55 Final Engineered Features
+- 5 Machine Learning Models Evaluated
+- Random Forest Selected as Final Model
+- R² Score: 0.9875
+- RMSE: 3.11
+- Interactive Streamlit Dashboard
+- Live Cloud Deployment
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 **Access the deployed application here:** [ChargeWise AI on Streamlit Cloud](https://chargewise-ai.streamlit.app)
 
 ---
 
-## 📊 Dataset & Model Intelligence
+## Dataset & Model Intelligence
 
 ### Dataset Profile
 - **Total Records:** 8,354
@@ -50,7 +60,7 @@ The following algorithms were rigorously evaluated to determine the best predict
 
 ---
 
-## ⚙️ Feature Engineering
+## Feature Engineering
 
 A robust feature engineering pipeline was implemented to extract deep domain-specific insights:
 
@@ -73,7 +83,7 @@ A robust feature engineering pipeline was implemented to extract deep domain-spe
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Machine Learning & Data Analysis
 - **Python** (Core Language)
@@ -90,29 +100,36 @@ A robust feature engineering pipeline was implemented to extract deep domain-spe
 
 ---
 
-## 📐 System Architecture
+## System Architecture
 
 ```mermaid
-graph TD
-    A[User Input] --> B[Feature Processing]
-    B --> C[Feature Engineering]
-    C --> D[Trained Random Forest Model]
-    D --> E[Demand Prediction]
-    E --> F[Demand Categorization]
-    F --> G[Operational Recommendation]
-    
-    style A fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
-    style B fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
-    style C fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
-    style D fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
-    style E fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
-    style F fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
-    style G fill:#1e2127,stroke:#00ffcc,stroke-width:2px,color:#fff
+flowchart TD
+
+A[User Input Interface]
+B[Input Validation Layer]
+C[Feature Processing]
+D[Feature Engineering Pipeline]
+E[Encoded Feature Vector]
+F[Random Forest Regressor]
+G[Demand Prediction]
+H[Demand Classification]
+I[Operational Recommendation Engine]
+J[Streamlit Dashboard Output]
+
+A --> B
+B --> C
+C --> D
+D --> E
+E --> F
+F --> G
+G --> H
+H --> I
+I --> J
 ```
 
 ---
 
-## 📸 Application Screenshots
+## Application Screenshots
 
 ### Home Dashboard
 ![Home Dashboard](assets/screenshots/home.png)
@@ -136,7 +153,7 @@ graph TD
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **EV Charging Demand Forecasting:** High-accuracy predictive modeling.
 - **Interactive Prediction Dashboard:** User-friendly web interface.
@@ -149,12 +166,12 @@ graph TD
 
 ---
 
-## 💻 Local Installation
+## Local Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/somiya-namdeo/ChargeWise-AI.git
-   cd ChargeWise-AI
+   git clone https://github.com/somiya-namdeo/EV-Demand-Forecasting.git
+   cd EV-Demand-Forecasting
    ```
 
 2. **Install dependencies**
@@ -173,10 +190,10 @@ graph TD
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
-ChargeWise-AI/
+EV-Demand-Forecasting/
 ├── assets/                  # Images and screenshot assets
 ├── data/                    # Raw and processed datasets
 ├── models/                  # Pickled ML models and feature schemas
@@ -190,7 +207,7 @@ ChargeWise-AI/
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Real-Time EV Station Data Integration
 - Weather API Integration
@@ -202,7 +219,7 @@ ChargeWise-AI/
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Somiya Namdeo**
 - B.Tech Computer Science Engineering (AI & ML) @ VIT Bhopal University
