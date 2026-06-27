@@ -129,27 +129,51 @@ I --> J
 
 ---
 
-## Application Screenshots
+## Home Dashboard
 
-### Home Dashboard
 ![Home Dashboard](assets/screenshots/home.png)
-*Overview dashboard showing final model selection and key performance metrics.*
 
-### Prediction Interface
-<p align="center">
-  <img src="assets/screenshots/prediction-1.png" width="32%" />
-  <img src="assets/screenshots/prediction-2.png" width="32%" />
-  <img src="assets/screenshots/prediction-3.png" width="32%" />
-</p>
-*Interactive demand forecasting interface allowing users to provide charging station, vehicle, environmental, and pricing information.*
+Overview dashboard showing final model selection and key performance metrics.
 
-### Prediction Results
+---
+
+## Prediction Interface – Station & Vehicle Inputs
+
+![Prediction Step 1](assets/screenshots/prediction-1.png)
+
+Station information and vehicle configuration inputs used for demand forecasting.
+
+---
+
+## Prediction Interface – Environmental Inputs
+
+![Prediction Step 2](assets/screenshots/prediction-2.png)
+
+Environmental and temporal factors affecting charging demand.
+
+---
+
+## Prediction Interface – Energy & Pricing Inputs
+
+![Prediction Step 3](assets/screenshots/prediction-3.png)
+
+Energy pricing and renewable energy parameters used in prediction.
+
+---
+
+## Prediction Results
+
 ![Prediction Results](assets/screenshots/results.png)
-*Real-time EV charging demand prediction with automated demand categorization and operational recommendations.*
 
-### Model Performance
+Predicted charging demand, demand category, and operational recommendation.
+
+---
+
+## Model Performance Dashboard
+
 ![Model Performance](assets/screenshots/model-performance.png)
-*Comparative evaluation of multiple machine learning algorithms and final model selection.*
+
+Comparison of evaluated machine learning models and final model metrics.
 
 ---
 
