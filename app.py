@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import joblib
 import os
 
@@ -73,29 +72,44 @@ if page == "Home":
     st.markdown("### EV Charging Demand Forecasting")
     
     # Professional metric cards
-    m1, m2, m3 = st.columns(3)
-    with m1:
-        st.metric("Final Model", "Random Forest")
-    with m2:
-        st.metric("R² Score", "0.9875")
-    with m3:
-        st.metric("RMSE", "3.11")
+    st.markdown("""
+    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+        <div class="card" style="flex: 1; text-align: center; border-bottom: 4px solid #00ffcc;">
+            <h4 style="margin: 0; color: #888;">Final Model</h4>
+            <h2 style="margin: 10px 0; color: #00ffcc;">Random Forest</h2>
+        </div>
+        <div class="card" style="flex: 1; text-align: center; border-bottom: 4px solid #00ffcc;">
+            <h4 style="margin: 0; color: #888;">R² Score</h4>
+            <h2 style="margin: 10px 0; color: #00ffcc;">0.9875</h2>
+        </div>
+        <div class="card" style="flex: 1; text-align: center; border-bottom: 4px solid #00ffcc;">
+            <h4 style="margin: 0; color: #888;">RMSE</h4>
+            <h2 style="margin: 10px 0; color: #00ffcc;">3.11</h2>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
         
     st.markdown("""
-    <div class="card" style="margin-top: 20px;">
+    <div class="card">
+        <h4>Business Problem</h4>
+        <p>EV charging stations often face congestion, under-utilization, inefficient charger allocation, and peak-hour demand spikes.</p>
+        <p>ChargeWise AI forecasts charging demand using station conditions, vehicle characteristics, environmental factors, and temporal usage patterns to support smarter infrastructure planning and operational decision-making.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="card">
         <h4>Intelligent Forecasting for EV Infrastructure</h4>
         <p>ChargeWise AI is a professional machine learning dashboard designed to forecast EV charging demand. By leveraging robust machine learning models and analyzing various charging station and session conditions, it predicts demand levels with high accuracy, enabling better resource optimization and planning.</p>
     </div>
     """, unsafe_allow_html=True)
-    
-    st.info("Use the sidebar navigation to predict demand, view model performance, or read about the project's methodology.")
 
 elif page == "Predict Demand":
     st.title("Predict Charging Demand")
     st.markdown("Enter station, vehicle, environment, and time details to estimate EV charging demand.")
     
     # Forms and Inputs
-    with st.expander("Section 1: Basic Station Details", expanded=True):
+    with st.expander("Station Information", expanded=True):
         col1, col2 = st.columns(2)
         with col1:
             station_id = st.selectbox("Station ID", [f"ST{i:03d}" for i in range(1, 21)])
@@ -104,7 +118,7 @@ elif page == "Predict Demand":
             queue_length = st.number_input("Queue Length", min_value=0, value=2)
             waiting_time = st.number_input("Waiting Time (mins)", min_value=0, value=10)
 
-    with st.expander("Section 2: Vehicle and Charging Details", expanded=True):
+    with st.expander("Vehicle Information", expanded=True):
         col1, col2 = st.columns(2)
         with col1:
             vehicle_type = st.selectbox("Vehicle Type", ["Car", "Two-Wheeler", "Bus", "Truck"])
@@ -114,7 +128,7 @@ elif page == "Predict Demand":
             charging_power_kW = st.number_input("Charging Power (kW)", min_value=1.0, value=50.0)
             charging_priority = st.selectbox("Charging Priority", ["High", "Medium", "Low"])
 
-    with st.expander("Section 3: Environment and Time Details", expanded=True):
+    with st.expander("Environmental Factors", expanded=True):
         col1, col2, col3 = st.columns(3)
         with col1:
             traffic_density = st.selectbox("Traffic Density", ["High", "Medium", "Low"])
@@ -130,7 +144,7 @@ elif page == "Predict Demand":
             is_weekend_input = st.selectbox("Is Weekend?", ["No", "Yes"])
             is_weekend = 1 if is_weekend_input == "Yes" else 0
 
-    with st.expander("Section 4: Energy and Pricing", expanded=True):
+    with st.expander("Energy & Pricing", expanded=True):
         col1, col2 = st.columns(2)
         with col1:
             electricity_price = st.number_input("Electricity Price ($/kWh)", min_value=0.0, value=0.15, step=0.01)
@@ -298,245 +312,154 @@ elif page == "Model Performance":
     - **Lowest RMSE**: 3.11
     - **Lowest MAE**: 2.61
     - **Better Generalization**: It demonstrated better generalization than the tuned version.
-    
-    ### Feature Importance
-    
-    **Feature Importance Analysis**
-    
-    Feature importance measures the relative contribution of each feature to the model's prediction process.
-    
-    Higher importance values indicate features that have a stronger influence on forecasting charging demand.
     """)
 
-    # Extract feature importance from the model
-    if hasattr(model, "feature_importances_"):
-        importances = model.feature_importances_
-        feature_names = model_features
-        importance_df = pd.DataFrame({"Feature": feature_names, "Importance": importances})
-        importance_df = importance_df.sort_values(by="Importance", ascending=False).head(10)
+    with st.expander("Feature Importance Interpretation", expanded=False):
+        st.markdown("""
+        **Feature Importance Analysis**
         
-        st.bar_chart(importance_df.set_index("Feature"))
+        Feature importance measures the relative contribution of each feature to the model's prediction process.
+        Higher importance values indicate features that have a stronger influence on forecasting charging demand.
+        """)
         
-    st.markdown("""
-    ### Top Features
-    | Feature | Importance |
-    |---------|------------|
-    | `time_slot_Peak` | 0.756 |
-    | `renewable_energy_ratio` | 0.067 |
-    | `load_per_queue` | 0.065 |
-    | `queue_length` | 0.046 |
-    | `traffic_density_Low` | 0.033 |
-
-    ### Detailed Insights
-    
-    **Time Slot (Peak Hours)**
-    - Most influential feature (~75% importance)
-    - Indicates charging demand is strongly driven by peak usage behavior.
-    
-    **Load Per Queue**
-    - Represents charging station congestion.
-    - Higher queue pressure increases demand.
-    
-    **Renewable Energy Ratio**
-    - Suggests energy availability influences charging activity.
-    
-    **Queue Length**
-    - Captures station utilization and waiting conditions.
-    """)
-    
-    st.info("""
-    **Conclusion**
-    
-    The analysis indicates that charging demand is influenced more by usage behavior, station congestion, and infrastructure conditions than by individual vehicle characteristics.
-    
-    Peak charging periods emerged as the dominant demand driver, accounting for approximately 75% of the model's predictive signal.
-    """)
-    
-    st.markdown("""
-    ### Model Reliability & Validation
-    
-    **Cross Validation Scores**
-    - 0.9866
-    - 0.9870
-    - 0.9862
-    - 0.9858
-    - 0.9870
-    
-    **Mean Cross Validation R² Score: 0.9865**
-    
-    *The consistency of cross-validation scores demonstrates stable model behavior across multiple train-validation splits.*
-    
-    **Overfitting Analysis**
-    - Train R²: 0.9981
-    - Test R²: 0.9875
-    
-    The small performance gap indicates strong generalization and minimal overfitting.
-    """, unsafe_allow_html=True)
-    
-    st.markdown("### Business Impact")
-    
-    st.success("""
-    **Practical Applications**
-    - EV Charging Demand Forecasting
-    - Charging Station Capacity Planning
-    - Queue and Congestion Management
-    - Energy Distribution Optimization
-    - Renewable Energy Utilization Planning
-    - Smart Charging Infrastructure Expansion
-    
-    The system can assist charging network operators in making data-driven decisions regarding charger deployment, resource allocation, peak-hour management, and future infrastructure planning.
-    """)
-    
-    st.markdown("### Project Highlights")
-    
-    ph1, ph2, ph3, ph4 = st.columns(4)
-    ph1.info("✓ Explored 5+ EV-related datasets")
-    ph2.info("✓ Engineered 8 custom domain-specific features")
-    ph3.info("✓ Removed multiple target leakage variables")
-    ph4.info("✓ Evaluated 5 machine learning algorithms")
-    
-    ph5, ph6, ph7, ph8 = st.columns(4)
-    ph5.info("✓ Achieved R² Score of 0.9875")
-    ph6.info("✓ Performed Cross Validation and Overfitting Analysis")
-    ph7.info("✓ Implemented Feature Importance Interpretation")
-    ph8.info("✓ Built and Deployed a Streamlit Application")
+        # Extract feature importance from the model
+        if hasattr(model, "feature_importances_"):
+            importances = model.feature_importances_
+            feature_names = model_features
+            importance_df = pd.DataFrame({"Feature": feature_names, "Importance": importances})
+            importance_df = importance_df.sort_values(by="Importance", ascending=False)
+            top5_df = importance_df.head(5)
+            
+            # Build Top Features card
+            top_features_html = '<div class="card" style="margin-top: 15px;"><h4>Top Features</h4><table style="width:100%; text-align:left; border-collapse: collapse;"><tr><th style="border-bottom: 1px solid #333; padding: 8px; color: #888;">Feature</th><th style="border-bottom: 1px solid #333; padding: 8px; color: #888;">Importance</th></tr>'
+            for _, row in top5_df.iterrows():
+                top_features_html += f'<tr><td style="padding: 8px; border-bottom: 1px solid #222;"><code>{row["Feature"]}</code></td><td style="padding: 8px; border-bottom: 1px solid #222;">{row["Importance"]:.4f}</td></tr>'
+            top_features_html += '</table></div>'
+            
+            st.markdown(top_features_html, unsafe_allow_html=True)
+            
+            st.markdown("#### Feature Importance Chart")
+            st.bar_chart(importance_df.head(10).set_index("Feature"))
+            
+    with st.expander("Detailed Insights", expanded=False):
+        st.markdown("""
+        **Time Slot (Peak Hours)**
+        - Most influential feature (~75% importance)
+        - Indicates charging demand is strongly driven by peak usage behavior.
+        
+        **Load Per Queue**
+        - Represents charging station congestion.
+        - Higher queue pressure increases demand.
+        
+        **Renewable Energy Ratio**
+        - Suggests energy availability influences charging activity.
+        
+        **Queue Length**
+        - Captures station utilization and waiting conditions.
+        
+        **Conclusion**
+        
+        The analysis indicates that charging demand is influenced more by usage behavior, station congestion, and infrastructure conditions than by individual vehicle characteristics.
+        Peak charging periods emerged as the dominant demand driver, accounting for approximately 75% of the model's predictive signal.
+        """)
+        
+    with st.expander("Cross Validation Analysis", expanded=False):
+        st.markdown("""
+        **Cross Validation Scores**
+        - 0.9866
+        - 0.9870
+        - 0.9862
+        - 0.9858
+        - 0.9870
+        
+        **Mean Cross Validation R² Score: 0.9865**
+        
+        *The consistency of cross-validation scores demonstrates stable model behavior across multiple train-validation splits.*
+        """)
+        
+    with st.expander("Overfitting Analysis", expanded=False):
+        st.markdown("""
+        **Overfitting Analysis**
+        - Train R²: 0.9981
+        - Test R²: 0.9875
+        
+        The small performance gap indicates strong generalization and minimal overfitting.
+        """)
+        
+    with st.expander("Business Impact", expanded=False):
+        st.markdown("""
+        **Practical Applications**
+        - EV Charging Demand Forecasting
+        - Charging Station Capacity Planning
+        - Queue and Congestion Management
+        - Energy Distribution Optimization
+        - Renewable Energy Utilization Planning
+        - Smart Charging Infrastructure Expansion
+        
+        The system can assist charging network operators in making data-driven decisions regarding charger deployment, resource allocation, peak-hour management, and future infrastructure planning.
+        """)
+        
+    with st.expander("Project Highlights", expanded=False):
+        ph1, ph2, ph3, ph4 = st.columns(4)
+        ph1.info("✓ Explored 5+ EV datasets")
+        ph2.info("✓ Engineered 8 custom features")
+        ph3.info("✓ Removed target leakage")
+        ph4.info("✓ Evaluated 5 algorithms")
+        
+        ph5, ph6, ph7, ph8 = st.columns(4)
+        ph5.info("✓ Achieved R² of 0.9875")
+        ph6.info("✓ Robust CV & Generalization")
+        ph7.info("✓ Feature Interpretation")
+        ph8.info("✓ Streamlit Deployment")
 
 elif page == "About Project":
     st.title("About ChargeWise AI")
     
     st.markdown("""
-    ### 1. Project Overview
-    ChargeWise AI is an end-to-end machine learning system designed to forecast EV charging demand using station conditions, vehicle characteristics, environmental variables, and temporal patterns.
+    ### Project Overview
+    ChargeWise AI is a machine learning system designed to forecast EV charging demand using station conditions, vehicle characteristics, environmental variables, and temporal patterns.
     
     <div class="card" style="border-left: 4px solid #00ffcc;">
-        <strong>Business Objective:</strong>
-        <ul>
-            <li>Reduce waiting times</li>
-            <li>Improve charger allocation</li>
-            <li>Support infrastructure planning</li>
-            <li>Optimize charging network operations</li>
-        </ul>
+        <strong>Business Objectives:</strong>
+        <p>Reduce waiting times, improve charger allocation, support infrastructure planning, and optimize charging network operations.</p>
     </div>
     
-    ### 2. Dataset Exploration & Selection
-    Multiple datasets were explored:
-    - EV Charging Sessions Dataset
-    - EV Charging Stations Dataset
-    - EV Charging Patterns Dataset
-    - Weather Dataset
-    - Holiday Datasets
+    ### Dataset & Features
+    Multiple datasets (Sessions, Stations, Weather) were evaluated. Data was rigorously cleaned, and target leakage variables (like final state-of-charge and energy consumed) were removed to ensure realistic forecasting. Exploratory analysis revealed that peak hours and station congestion are primary drivers of charging demand.
     
-    All datasets were investigated, compared, and retained in the raw data directory, but only the most suitable dataset was selected based on quality, completeness, and forecasting relevance.
-
-    ### 3. Data Cleaning & Preparation
-    - Missing value analysis
-    - Duplicate detection
-    - Datetime processing
-    - Data consistency validation
-    - Removal of unnecessary attributes
-
-    ### 4. Exploratory Data Analysis (EDA)
-    - Demand distribution analysis
-    - Correlation analysis
-    - Vehicle type impact
-    - Weather impact
-    - Traffic density impact
-    - Time slot impact
-    - Feature relationship analysis
+    ### Feature Engineering
+    Domain-specific features were created to capture complex operational dynamics:
+    - `waiting_per_queue`: Normalizes waiting time using queue length.
+    - `load_per_queue`: Distributes charging load across the queue.
+    - `price_per_kWh`: Calculates effective electricity cost.
+    - `charging_efficiency`: Relates charging power to battery capacity.
+    - `power_to_wait_ratio`: Balances delivered power against waiting time.
     
-    **Key findings:**
-    - Peak hours strongly influence demand
-    - Traffic density significantly affects charging behavior
-    - Environmental factors contribute to demand variation
-    - Queue-related variables correlate with charging demand
-
-    ### 5. Feature Engineering
-    Custom features created:
+    ### Model Development
+    Multiple regression algorithms were evaluated (Linear Regression, Decision Tree, Random Forest, XGBoost, CatBoost). Random Forest was selected for its optimal balance of performance and generalization.
     
-    - **`waiting_per_queue`**: Normalizes waiting time using queue length.
-    - **`load_per_queue`**: Distributes charging load across the queue.
-    - **`price_per_kWh`**: Calculates effective electricity cost.
-    - **`charging_efficiency`**: Measures relationship between charging power and battery capacity.
-    - **`power_to_wait_ratio`**: Balances delivered power against waiting time.
-
-    ### 6. Leakage Detection & Feature Selection
-    Target leakage occurs when a model is trained with data it would not have at prediction time. Removing leakage was critical for realistic forecasting.
+    ### Model Performance
+    The final Random Forest model achieved highly robust metrics:
+    - **R² Score:** 0.9875
+    - **RMSE:** 3.11
+    - **Mean CV Score:** 0.9865
     
-    Removed variables:
-    - `final_soc`
-    - `energy_consumed_kWh`
-    - `charging_duration`
-    - `station_load` derived variables
-
-    ### 7. Model Development & Comparison
-    Evaluated models:
-    - Linear Regression
-    - Decision Tree Regressor
-    - Random Forest Regressor
-    - XGBoost Regressor
-    - CatBoost Regressor
+    Minimal gap between training (0.9981) and testing (0.9875) R² scores indicates excellent generalization with no significant overfitting.
     
-    Metrics used: MAE, MSE, RMSE, R²
-
-    ### 8. Hyperparameter Tuning & Validation
-    - RandomizedSearchCV
-    - Cross Validation
-    - Generalization Testing
-    - Overfitting Analysis
-    
-    The tuned Random Forest underperformed the default model and therefore the default model was retained.
-
-    ### 9. Model Interpretation
-    Feature Importance was analyzed to interpret model decisions.
-    
-    **Top Drivers:**
-    - `time_slot_Peak`
-    - `renewable_energy_ratio`
-    - `load_per_queue`
-    - `queue_length`
-    
-    Peak charging periods emerged as the strongest predictor.
-
-    ### 10. Business Impact
+    ### Business Impact
     <div class="card" style="border-left: 4px solid #28a745;">
         <strong>Practical Applications:</strong>
-        <ul>
-            <li>EV demand forecasting</li>
-            <li>Charging station capacity planning</li>
-            <li>Queue management</li>
-            <li>Energy optimization</li>
-            <li>Renewable energy integration</li>
-            <li>Smart charging infrastructure planning</li>
-        </ul>
-    </div>
-
-    ### 11. Project Workflow
-    <div style="text-align: center; padding: 20px; background-color: #1e2127; border-radius: 12px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px;">
-        Dataset Selection <br>↓<br> Data Cleaning <br>↓<br> EDA <br>↓<br> Feature Engineering <br>↓<br> Feature Selection <br>↓<br> Model Training <br>↓<br> Validation <br>↓<br> Interpretation <br>↓<br> Deployment
+        <p>Enables data-driven decisions for charging station capacity planning, dynamic queue management, optimal energy distribution, and strategic infrastructure expansion.</p>
     </div>
     
-    ### 12. Key Achievements
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Explored 5+ EV-related datasets</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Engineered 8 custom features</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Removed target leakage variables</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Evaluated 5 ML algorithms</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Achieved R² Score of 0.9875</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Performed Cross Validation</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Conducted Overfitting Analysis</div>
-        <div style="background-color: #1e2127; padding: 10px 15px; border-radius: 8px; border-left: 3px solid #00ffcc;">✓ Built and deployed a Streamlit application</div>
-    </div>
-
-    ### 13. Deployment
-    - Model exported using Joblib
-    - Feature schema saved
-    - Deployed using Streamlit
-    - Supports real-time demand prediction
+    ### Deployment
+    The solution is packaged using Joblib and deployed as an interactive Streamlit web application, supporting real-time operational demand prediction.
     """, unsafe_allow_html=True)
 
 # Footer
 st.markdown("""
 <div class="footer">
-    Built by Somiya Namdeo | Machine Learning Project | ChargeWise AI
+    ChargeWise AI &bull; EV Charging Demand Forecasting<br>
+    Built by Somiya Namdeo
 </div>
 """, unsafe_allow_html=True)
